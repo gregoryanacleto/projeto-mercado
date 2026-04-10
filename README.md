@@ -22,3 +22,10 @@ npm install
 node server.js
 
 4. Abrir frontend/index.html no navegador
+
+
+## Funcionalidades
+
+- Cadastro de produtos
+- Listagem de produtos
+- Atualização de estoque
