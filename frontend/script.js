@@ -1,37 +1,68 @@
+// 🔹 CADASTRAR PRODUTO
 function salvarProduto(){
 
-fetch("http://localhost:3000/produtos",{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-nome:document.getElementById("nome").value,
-preco:document.getElementById("preco").value,
-estoque:document.getElementById("estoque").value
-})
-})
-.then(()=>{
-alert("Produto cadastrado!");
-listarProdutos();
-})
+ fetch("http://localhost:3000/produtos",{
+  method:"POST",
+  headers:{
+   "Content-Type":"application/json"
+  },
+  body:JSON.stringify({
+   nome:document.getElementById("nome").value,
+   preco:document.getElementById("preco").value,
+   estoque:document.getElementById("estoque").value
+  })
+ })
+ .then(()=>{
+  alert("Produto cadastrado!")
+  listarProdutos()
+ })
 
 }
 
+// 🔹 LISTAR PRODUTOS + CAMPO PARA ATUALIZAR
 function listarProdutos(){
 
-fetch("http://localhost:3000/produtos")
-.then(res=>res.json())
-.then(produtos=>{
+ fetch("http://localhost:3000/produtos")
+ .then(res=>res.json())
+ .then(produtos=>{
 
-let html=""
+  let html=""
 
-produtos.forEach(p=>{
-html += p.id + " - " + p.nome + " | R$" + p.preco + " | estoque: " + p.estoque + "<br>"
+  produtos.forEach(p=>{
+ html += `
+  <div>
+    <strong>${p.nome}</strong><br>
+    R$ ${p.preco} | estoque: ${p.estoque}<br><br>
+
+    <input id="estoque-${p.id}" placeholder="Novo estoque">
+    <button onclick="atualizarEstoque(${p.id})">Atualizar</button>
+  </div>
+ `
 })
 
-document.getElementById("lista").innerHTML = html
+  document.getElementById("lista").innerHTML = html
 
-})
+ })
+
+}
+
+// 🔹 ATUALIZAR ESTOQUE
+function atualizarEstoque(id){
+
+ const novoEstoque = document.getElementById(`estoque-${id}`).value
+
+ fetch(`http://localhost:3000/produtos/${id}`,{
+  method:"PUT",
+  headers:{
+   "Content-Type":"application/json"
+  },
+  body: JSON.stringify({
+   estoque: novoEstoque
+  })
+ })
+ .then(()=>{
+  alert("Estoque atualizado!")
+  listarProdutos()
+ })
 
 }
