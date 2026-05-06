@@ -24,8 +24,12 @@ node server.js
 4. Abrir frontend/index.html no navegador
 
 
+
 ## Funcionalidades
 
 - Cadastro de produtos
 - Listagem de produtos
 - Atualização de estoque
+- Cadastro de clientes
+- Listagem de clientes
+- Exclusão de clientes
