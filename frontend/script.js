@@ -66,3 +66,71 @@ function atualizarEstoque(id){
  })
 
 }
+
+
+function salvarCliente(){
+
+ fetch("http://localhost:3000/clientes",{
+  method:"POST",
+  headers:{
+   "Content-Type":"application/json"
+  },
+  body:JSON.stringify({
+   nome:document.getElementById("clienteNome").value,
+   email:document.getElementById("clienteEmail").value,
+   telefone:document.getElementById("clienteTelefone").value
+  })
+ })
+ .then(()=>{
+  alert("Cliente cadastrado!")
+  listarClientes()
+ })
+
+}
+
+
+function listarClientes(){
+
+ fetch("http://localhost:3000/clientes")
+ .then(res=>res.json())
+ .then(clientes=>{
+
+  let html=""
+
+  clientes.forEach(c=>{
+
+   html += `
+    <div class="cliente-card">
+
+      <strong>${c.nome}</strong><br>
+      ${c.email}<br>
+      ${c.telefone}<br><br>
+
+      <button onclick="excluirCliente(${c.id})">
+       Excluir Cliente
+      </button>
+
+    </div>
+    <br>
+   `
+
+  })
+
+  document.getElementById("listaClientes").innerHTML = html
+
+ })
+
+}
+
+
+function excluirCliente(id){
+
+ fetch(`http://localhost:3000/clientes/${id}`,{
+  method:"DELETE"
+ })
+ .then(()=>{
+  alert("Cliente excluído!")
+  listarClientes()
+ })
+
+}

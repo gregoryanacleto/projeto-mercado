@@ -74,6 +74,68 @@ app.put("/produtos/:id", (req, res) => {
 
 })
 
+
+app.post("/clientes",(req,res)=>{
+
+ const {nome,email,telefone} = req.body
+
+ db.query(
+  "INSERT INTO clientes (nome,email,telefone) VALUES (?,?,?)",
+  [nome,email,telefone],
+  (err,result)=>{
+   if(err){
+    console.error(err)
+    res.status(500).send("Erro ao cadastrar cliente")
+    return
+   }
+
+   res.send("Cliente cadastrado")
+  }
+ )
+
+})
+
+
+app.get("/clientes",(req,res)=>{
+
+ db.query("SELECT * FROM clientes",(err,result)=>{
+
+  if(err){
+   console.error(err)
+   res.status(500).send("Erro ao listar clientes")
+   return
+  }
+
+  res.json(result)
+
+ })
+
+})
+
+
+
+app.delete("/clientes/:id",(req,res)=>{
+
+ const {id} = req.params
+
+ db.query(
+  "DELETE FROM clientes WHERE id = ?",
+  [id],
+  (err,result)=>{
+   if(err){
+    console.error(err)
+    res.status(500).send("Erro ao excluir cliente")
+    return
+   }
+
+   res.send("Cliente excluído")
+  }
+ )
+
+})
+
+
+
 // 🔹 START SERVER
 app.listen(3000,()=>{
  console.log("Servidor rodando na porta 3000")

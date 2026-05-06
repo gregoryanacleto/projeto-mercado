@@ -57,3 +57,10 @@ button:hover{
     border-radius:8px;
     margin-bottom:10px;
 }
+
+.cliente-card{
+    background:#f9f9f9;
+    padding:10px;
+    border-radius:8px;
+    margin-bottom:10px;
+}
